@@ -63,7 +63,7 @@ class TestTTSClient:
 
         # Check headers
         assert call_args[1]["headers"]["Content-Type"] == "application/msgpack"
-        assert call_args[1]["headers"]["model"] == "s2-pro"  # default model
+        assert call_args[1]["headers"]["model"] == "s2.1-pro"  # default model
 
         # Check payload was msgpack encoded
         assert "content" in call_args[1]
@@ -84,6 +84,8 @@ class TestTTSClient:
 
         # Verify request was made correctly
         mock_client_wrapper.request.assert_called_once()
+        call_args = mock_client_wrapper.request.call_args
+        assert call_args[1]["headers"]["model"] == "s2.1-pro"
 
     def test_convert_with_reference_id(self, tts_client, mock_client_wrapper):
         """Test TTS with reference voice ID."""
@@ -510,6 +512,7 @@ class TestAsyncTTSClient:
 
         assert call_args[0][0] == "POST"
         assert call_args[0][1] == "/v1/tts"
+        assert call_args[1]["headers"]["model"] == "s2.1-pro"
 
     @pytest.mark.asyncio
     async def test_convert_basic(self, async_tts_client, async_mock_client_wrapper):
@@ -533,6 +536,8 @@ class TestAsyncTTSClient:
 
         # Verify request was made
         async_mock_client_wrapper.request.assert_called_once()
+        call_args = async_mock_client_wrapper.request.call_args
+        assert call_args[1]["headers"]["model"] == "s2.1-pro"
 
     @pytest.mark.asyncio
     async def test_convert_with_reference_id(

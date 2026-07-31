@@ -85,6 +85,16 @@ asyncio.run(main())
 
 ### Text-to-Speech
 
+**Selecting a model:**
+
+```python
+# Recommended for production
+production_audio = client.tts.convert(
+    text="Production speech",
+    model="s2.1-pro",
+)
+```
+
 **With custom voice:**
 
 ```python
